@@ -1,0 +1,102 @@
+schema: '2.0'
+stages:
+  preprocess:
+    cmd: python -m src.pipelines.preprocess_flow
+    deps:
+    - path: data/raw/bitcoin_investing.csv
+      hash: md5
+      md5: cd349da1b430a02b4fcee6e711e73ede
+      size: 272351
+    - path: src/data/features.py
+      hash: md5
+      md5: 3168a5eeb6422d2685926df3cb7cd6f0
+      size: 2676
+    - path: src/data/loader.py
+      hash: md5
+      md5: 40a69068ea039fb4695592603c1a5a30
+      size: 2346
+    - path: src/data/splitter.py
+      hash: md5
+      md5: 8e868053c3525c8fb01e613c91fb9019
+      size: 4963
+    params:
+      params.yaml:
+        preprocessing:
+          train_end: '2022-12-31'
+          val_end: '2023-12-31'
+    outs:
+    - path: artifacts/scaler.pkl
+      hash: md5
+      md5: 6e63f48f14c0a30b2f384d2fd2086b35
+      size: 2359
+    - path: data/processed/features.csv
+      hash: md5
+      md5: cd9e0a6edad6e19054c0daff03371472
+      size: 2341650
+    - path: data/processed/splits/test.csv
+      hash: md5
+      md5: 4abf1138d48ddaad291699e7e9f13bb4
+      size: 703591
+    - path: data/processed/splits/train.csv
+      hash: md5
+      md5: 09ec311ed7a85972b2f259776924a914
+      size: 2045765
+    - path: data/processed/splits/val.csv
+      hash: md5
+      md5: 1d40be6988d0ed057e19753be0201af5
+      size: 304549
+  train:
+    cmd: python -m src.pipelines.train_flow
+    deps:
+    - path: artifacts/scaler.pkl
+      hash: md5
+      md5: 6e63f48f14c0a30b2f384d2fd2086b35
+      size: 2359
+    - path: data/processed/splits/test.csv
+      hash: md5
+      md5: 4abf1138d48ddaad291699e7e9f13bb4
+      size: 703591
+    - path: data/processed/splits/train.csv
+      hash: md5
+      md5: 09ec311ed7a85972b2f259776924a914
+      size: 2045765
+    - path: data/processed/splits/val.csv
+      hash: md5
+      md5: 1d40be6988d0ed057e19753be0201af5
+      size: 304549
+    - path: src/models/lstm_model.py
+      hash: md5
+      md5: f05f32e0e55257401f66df5fe26cc34b
+      size: 1851
+    - path: src/models/xgb_model.py
+      hash: md5
+      md5: a5dadf578c0bd2d0b98e3416df8af9e9
+      size: 1114
+    params:
+      params.yaml:
+        ensemble:
+          lstm_weight: 0.45
+          xgb_weight: 0.55
+        lstm:
+          sequence_length: 30
+          hidden_size: 128
+          num_layers: 2
+          dropout: 0.2
+          learning_rate: 0.001
+          weight_decay: 0.0001
+          batch_size: 32
+          max_epochs: 100
+          early_stopping_patience: 10
+        xgboost:
+          n_estimators: 500
+          max_depth: 6
+          learning_rate: 0.05
+          subsample: 0.8
+          colsample_bytree: 0.8
+          early_stopping_rounds: 20
+          tree_method: hist
+    outs:
+    - path: metrics/scores.json
+      hash: md5
+      md5: 60a0e5660e34e9115a43f0bb9840c27d
+      size: 286
