@@ -32,7 +32,7 @@ st.set_page_config(page_title="Bitcoin Price Forecasting", layout="wide")
 mlflow_uri = os.environ.get("MLFLOW_TRACKING_URI", "http://localhost:5000")
 mlflow.set_tracking_uri(mlflow_uri)
 
-st.title("🚀 Bitcoin Price Forecasting Dashboard")
+st.title(" Bitcoin Price Forecasting Dashboard")
 
 # Load shared modal utility once
 _modal_util_path = os.path.join(current_dir, '_modal_util.html')
@@ -42,7 +42,7 @@ if os.path.exists(_modal_util_path):
         _modal_utility_html = f.read()
 
 # Create tabs for pages
-tab1, tab2, tab3, tab4 = st.tabs(["📈 Forecast", "📊 Model Performance", "🧠 Feature Importance", "🚨 Drift Status"])
+tab1, tab2, tab3, tab4 = st.tabs([" Forecast", " Model Performance", " Feature Importance", " Drift Status"])
 
 with tab1:
     st.header("BTC Actual vs Predicted (Last 90 Days)")
@@ -146,7 +146,19 @@ with tab2:
                             # If correlation is near 0 or 1, distinct look
                             if val == 1.0:
                                 bg = "primary-container"
-                            heatmap_html += f'<div title="{title}" class="aspect-square bg-{bg} rounded-sm opacity-[{opacity}%] cursor-pointer hover:scale-110 transition-transform"></div>\n'
+                            
+                            # Determine text color based on background darkness/opacity to ensure readability
+                            if opacity > 50:
+                                text_color = f"text-on-{bg}"
+                            else:
+                                text_color = "text-on-surface"
+                                
+                            heatmap_html += (
+                                f'<div title="{title}" class="aspect-square relative rounded-sm overflow-hidden cursor-pointer hover:scale-110 transition-transform flex items-center justify-center">'
+                                f'<div class="absolute inset-0 bg-{bg} opacity-[{opacity}%]"></div>'
+                                f'<span class="relative z-10 font-label-caps text-[10px] font-bold {text_color}">{val:.2f}</span>'
+                                f'</div>\n'
+                            )
                 else:
                     heatmap_html = '<div class="col-span-5 text-center text-error">Missing required columns for correlation</div>'
             else:
