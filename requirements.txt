@@ -14,4 +14,7 @@ uvicorn
 streamlit
 scikit-learn
 dvc
-pytest
+prophet
+daghub
+tabulate
+

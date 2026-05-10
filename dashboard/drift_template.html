@@ -1,262 +1,309 @@
 <!DOCTYPE html>
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>System Integrity - BTC Forecasting</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800;900&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-        tailwind.config = {
-          darkMode: "class",
-          theme: {
-            extend: {
-              "colors": {
-                      "background": "#131313",
-                      "secondary-fixed-dim": "#ffb0cd",
-                      "error-container": "#93000a",
-                      "surface-bright": "#3a3939",
-                      "on-tertiary": "#003915",
-                      "surface-container-high": "#2a2a2a",
-                      "inverse-surface": "#e5e2e1",
-                      "outline-variant": "#424754",
-                      "on-error": "#690005",
-                      "secondary-fixed": "#ffd9e4",
-                      "primary-container": "#4d8eff",
-                      "surface": "#131313",
-                      "primary": "#adc6ff",
-                      "surface-dim": "#131313",
-                      "inverse-primary": "#005ac2",
-                      "tertiary-fixed-dim": "#4ae176",
-                      "tertiary-container": "#00a74b",
-                      "on-tertiary-fixed": "#002109",
-                      "on-surface-variant": "#c2c6d6",
-                      "inverse-on-surface": "#313030",
-                      "surface-container-lowest": "#0e0e0e",
-                      "outline": "#8c909f",
-                      "on-secondary-fixed": "#3e0022",
-                      "on-error-container": "#ffdad6",
-                      "on-primary-container": "#00285d",
-                      "on-secondary": "#640039",
-                      "on-primary-fixed": "#001a42",
-                      "on-secondary-container": "#ffbad3",
-                      "tertiary-fixed": "#6bff8f",
-                      "surface-variant": "#353534",
-                      "surface-container": "#201f1f",
-                      "on-primary": "#002e6a",
-                      "surface-container-low": "#1c1b1b",
-                      "on-tertiary-fixed-variant": "#005321",
-                      "primary-fixed-dim": "#adc6ff",
-                      "tertiary": "#4ae176",
-                      "secondary": "#ffb0cd",
-                      "primary-fixed": "#d8e2ff",
-                      "surface-tint": "#adc6ff",
-                      "on-surface": "#e5e2e1",
-                      "on-tertiary-container": "#003111",
-                      "error": "#ffb4ab",
-                      "on-primary-fixed-variant": "#004395",
-                      "on-background": "#e5e2e1",
-                      "secondary-container": "#aa0266",
-                      "on-secondary-fixed-variant": "#8c0053",
-                      "surface-container-highest": "#353534"
-              },
-              "fontFamily": {
-                      "display-lg": ["Hanken Grotesk"],
-                      "body-lg": ["Inter"],
-                      "body-sm": ["Inter"],
-                      "label-caps": ["JetBrains Mono"],
-                      "headline-md": ["Hanken Grotesk"]
-              }
-            },
-          },
-        }
-    </script>
-<style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-            vertical-align: middle;
-        }
-        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #424754; border-radius: 2px; }
-        .bg-grid-subtle {
-            background-image: linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px),
-                              linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px);
-            background-size: 24px 24px;
-        }
-        body { background-color: transparent; margin: 0; padding: 0; }
-    </style>
-</head>
-<body class="text-on-background font-body-sm selection:bg-primary-container selection:text-on-primary-container">
-<!-- Main Content -->
-<main class="w-full bg-background bg-grid-subtle p-8 overflow-hidden rounded-xl border border-outline-variant/30">
-<div class="max-w-[1440px] mx-auto space-y-8">
-<!-- Hero Section: Operational Overview -->
-<section class="grid grid-cols-1 lg:grid-cols-4 gap-6">
-<div class="lg:col-span-3 bg-surface-container-lowest border border-outline-variant rounded-xl p-6 relative overflow-hidden group">
-<div class="flex justify-between items-start mb-4">
-<div>
-<h3 class="font-label-caps text-label-caps text-primary uppercase tracking-widest mb-1">Live Ingestion Flow</h3>
-<p class="text-on-surface-variant font-body-sm">Real-time health monitoring of upstream exchange sockets</p>
-</div>
-<div class="flex gap-2">
-<span class="px-4 py-1 bg-tertiary-container/20 text-tertiary border border-tertiary/30 rounded-full font-label-caps text-[10px] font-bold">99.98% HEALTH</span>
-<span class="px-4 py-1 bg-surface-variant text-on-surface-variant rounded-full font-label-caps text-[10px] font-bold">LAST SYNC: 2S AGO</span>
-</div>
-</div>
-<!-- Flow Diagram (Simplified Visual Representation) -->
-<div class="h-48 w-full flex items-center justify-between px-6 mt-6 relative">
-<!-- Background Lines -->
-<div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-<svg class="w-full h-full opacity-20" viewbox="0 0 800 200">
-<path class="text-primary" d="M50,100 Q200,50 400,100 T750,100" fill="none" stroke="currentColor" stroke-width="2"></path>
-<path class="text-secondary" d="M50,100 Q200,150 400,100 T750,100" fill="none" stroke="currentColor" stroke-width="2"></path>
-</svg>
-</div>
-<!-- Exchange Nodes -->
-<div class="flex flex-col gap-4 z-10">
-<div class="bg-surface-container-high border border-outline-variant p-2 rounded flex items-center gap-2">
-<span class="w-2 h-2 rounded-full bg-tertiary shadow-[0_0_8px_#4ae176]"></span>
-<span class="font-label-caps text-label-caps font-bold">BINANCE</span>
-</div>
-<div class="bg-surface-container-high border border-outline-variant p-2 rounded flex items-center gap-2">
-<span class="w-2 h-2 rounded-full bg-tertiary shadow-[0_0_8px_#4ae176]"></span>
-<span class="font-label-caps text-label-caps font-bold">COINBASE</span>
-</div>
-<div class="bg-surface-container-high border border-outline-variant p-2 rounded flex items-center gap-2">
-<span class="w-2 h-2 rounded-full bg-error shadow-[0_0_8px_#ffb4ab]"></span>
-<span class="font-label-caps text-label-caps font-bold">KRAKEN</span>
-</div>
-</div>
-<!-- Central Processor -->
-<div class="z-10 bg-surface-container-highest border-2 border-primary w-32 h-32 rounded-full flex flex-col items-center justify-center text-center">
-<span class="material-symbols-outlined text-primary text-3xl mb-1" data-icon="hub">hub</span>
-<span class="font-label-caps text-[10px] text-on-surface leading-tight font-bold">CENTRAL<br/>INGESTION</span>
-</div>
-<!-- Output Destinations -->
-<div class="flex flex-col gap-4 z-10">
-<div class="bg-surface-container-high border border-outline-variant p-2 rounded flex items-center gap-2">
-<span class="font-label-caps text-label-caps font-bold">MODEL_V12</span>
-<span class="w-2 h-2 rounded-full bg-tertiary shadow-[0_0_8px_#4ae176]"></span>
-</div>
-<div class="bg-surface-container-high border border-outline-variant p-2 rounded flex items-center gap-2">
-<span class="font-label-caps text-label-caps font-bold">TS_LAKE</span>
-<span class="w-2 h-2 rounded-full bg-tertiary shadow-[0_0_8px_#4ae176]"></span>
-</div>
-</div>
-</div>
-</div>
-<!-- PSI Summary Card -->
-<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 flex flex-col justify-between">
-<div>
-<h3 class="font-label-caps text-label-caps text-secondary uppercase tracking-widest mb-1 font-bold">Aggregate PSI</h3>
-<div class="text-display-lg font-display-lg text-secondary font-black text-5xl">0.084</div>
-<p class="font-body-sm text-on-surface-variant mt-1">Population Stability Index</p>
-</div>
-<div class="mt-6">
-<div class="flex justify-between font-label-caps text-[10px] mb-2 font-bold tracking-widest">
-<span>NOMINAL</span>
-<span>CRITICAL</span>
-</div>
-<div class="h-2 w-full bg-surface-container-high rounded-full overflow-hidden">
-<div class="h-full bg-secondary w-[42%]"></div>
-</div>
-<p class="font-label-caps text-[10px] mt-2 text-tertiary font-bold tracking-widest">STABLE FLOW DETECTED</p>
-</div>
-</div>
-</section>
-<!-- Distribution Shift Visualizations -->
-<section class="grid grid-cols-1 md:grid-cols-2 gap-6">
-<!-- Feature Drift Plot 1 -->
-<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6">
-<div class="flex justify-between items-center mb-8">
-<h3 class="font-headline-md text-2xl font-bold">Volume (24h) Dist Shift</h3>
-<div class="bg-surface-variant p-2 rounded flex items-center gap-4">
-<span class="font-label-caps text-label-caps text-on-surface-variant font-bold">KL-D: 0.12</span>
-<span class="w-px h-3 bg-outline-variant"></span>
-<span class="font-label-caps text-label-caps text-on-surface-variant font-bold">P-Val: 0.89</span>
-</div>
-</div>
-<div class="h-64 flex items-end justify-between gap-2 px-4">
-<!-- Dummy Histogram Bars -->
-<div class="flex-1 bg-primary/20 border-t-2 border-primary h-[30%]"></div>
-<div class="flex-1 bg-primary/20 border-t-2 border-primary h-[45%]"></div>
-<div class="flex-1 bg-primary/20 border-t-2 border-primary h-[60%]"></div>
-<div class="flex-1 bg-primary/20 border-t-2 border-primary h-[85%] relative">
-<div class="absolute -top-12 left-0 right-0 bg-secondary/40 border-t-2 border-secondary h-24"></div>
-</div>
-<div class="flex-1 bg-primary/20 border-t-2 border-primary h-[70%]"></div>
-<div class="flex-1 bg-primary/20 border-t-2 border-primary h-[40%]"></div>
-<div class="flex-1 bg-primary/20 border-t-2 border-primary h-[20%]"></div>
-</div>
-<div class="flex justify-between mt-4 px-4 text-[10px] font-label-caps text-on-surface-variant tracking-widest font-bold">
-<span>LOW VOL</span>
-<span>NORMALIZED RANGE</span>
-<span>SPIKE</span>
-</div>
-</div>
-<!-- Feature Drift Plot 2 -->
-<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6">
-<div class="flex justify-between items-center mb-8">
-<h3 class="font-headline-md text-2xl font-bold">RSI Divergence Trend</h3>
-<div class="bg-surface-variant p-2 rounded flex items-center gap-4">
-<span class="font-label-caps text-label-caps text-on-surface-variant font-bold">KL-D: 0.04</span>
-<span class="w-px h-3 bg-outline-variant"></span>
-<span class="font-label-caps text-label-caps text-on-surface-variant font-bold">P-Val: 0.94</span>
-</div>
-</div>
-<div class="h-64 relative">
-<!-- Overlay Chart Lines -->
-<svg class="w-full h-full" preserveaspectratio="none" viewbox="0 0 400 200">
-<path d="M0,150 Q50,140 100,160 T200,120 T300,140 T400,100" fill="none" stroke="#adc6ff" stroke-width="2"></path>
-<path d="M0,155 Q50,145 100,155 T200,125 T300,145 T400,105" fill="none" stroke="#ffb0cd" stroke-dasharray="4" stroke-width="1.5"></path>
-</svg>
-<div class="absolute top-0 right-0 flex flex-col gap-2">
-<div class="flex items-center gap-2">
-<div class="w-3 h-0.5 bg-primary"></div>
-<span class="font-label-caps text-[10px] font-bold tracking-widest">TRAIN</span>
-</div>
-<div class="flex items-center gap-2">
-<div class="w-3 h-0.5 bg-secondary border-dashed border-t"></div>
-<span class="font-label-caps text-[10px] font-bold tracking-widest">INFERENCE</span>
-</div>
-</div>
-</div>
-</div>
-</section>
-<!-- Alert Ledger -->
-<section class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden">
-<div class="p-6 border-b border-outline-variant flex justify-between items-center">
-<h3 class="font-headline-md text-2xl font-bold">Automated Alert Ledger</h3>
-<div class="flex gap-4">
-    <button onclick="openBtcModal('Filter Alerts', '<p>Use severity levels to filter drift alerts:</p><ul style=\'list-style:disc;padding-left:20px;margin-top:10px;\'>  <li style=\'margin-bottom:6px;\'><span style=\'color:#ffb4ab;font-weight:700;\'>CRITICAL</span> — Drift Score &gt; threshold (active)</li><li style=\'margin-bottom:6px;\'><span style=\'color:#ffb0cd;font-weight:700;\'>WARNING</span> — Drift Score moderately elevated</li><li style=\'margin-bottom:6px;\'><span style=\'color:#4ae176;font-weight:700;\'>RESOLVED</span> — Drift corrected by retraining</li></ul><p style=\'margin-top:12px;color:#8c909f;font-size:12px;\'>All alerts are sourced live from <code>reports/drift.json</code> via Evidently AI.</p>')" class="flex items-center gap-2 px-4 py-2 bg-surface-container-high border border-outline-variant rounded hover:bg-surface-variant transition-colors cursor-pointer">
-<span class="material-symbols-outlined text-sm" data-icon="filter_list">filter_list</span>
-<span class="font-label-caps text-label-caps font-bold">Filter</span>
-</button>
-<button onclick="openBtcModal('Export Drift Report', '<p>Your drift report is available in the following formats:</p><ul style=\'list-style:disc;padding-left:20px;margin-top:10px;\'>  <li style=\'margin-bottom:8px;\'><strong>JSON</strong> — <code>reports/drift.json</code> (machine-readable, full metrics)</li><li style=\'margin-bottom:8px;\'><strong>HTML</strong> — <code>reports/drift_report.html</code> (Evidently visual report)</li></ul><p style=\'margin-top:12px;color:#8c909f;font-size:12px;\'>Run <code>python src/monitoring/drift_report.py</code> to regenerate.</p>', &quot;<a href=\'https://docs.evidentlyai.com\' target=\'_blank\' style=\'background:#adc6ff;color:#002e6a;padding:8px 16px;border-radius:6px;font-size:12px;font-weight:700;text-decoration:none;\'>Open Evidently Docs</a>&quot;)" class="flex items-center gap-2 px-4 py-2 bg-surface-container-high border border-outline-variant rounded hover:bg-surface-variant transition-colors cursor-pointer">
-<span class="material-symbols-outlined text-sm" data-icon="download">download</span>
-<span class="font-label-caps text-label-caps font-bold">Export</span>
-</button>
-</div>
-</div>
-<div class="overflow-x-auto">
-<table class="w-full text-left border-collapse">
-<thead>
-<tr class="bg-surface-container-low font-label-caps text-label-caps text-on-surface-variant tracking-wider">
-<th class="px-6 py-4 font-bold">Timestamp</th>
-<th class="px-6 py-4 font-bold">Metric / Feature</th>
-<th class="px-6 py-4 font-bold">Severity</th>
-<th class="px-6 py-4 font-bold">Drift Score</th>
-<th class="px-6 py-4 font-bold">Status</th>
-<th class="px-6 py-4 font-bold">Action</th>
-</tr>
-</thead>
-<tbody class="font-body-sm divide-y divide-outline-variant">
+<html class="dark" lang="en">
 
-</tbody>
-</table>
-</div>
-</section>
-</div>
-</main>
-{modal_utility}</body></html>
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>System Integrity - BTC Forecasting</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800;900&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "background": "#131313",
+            "secondary-fixed-dim": "#ffb0cd",
+            "error-container": "#93000a",
+            "surface-bright": "#3a3939",
+            "on-tertiary": "#003915",
+            "surface-container-high": "#2a2a2a",
+            "inverse-surface": "#e5e2e1",
+            "outline-variant": "#424754",
+            "on-error": "#690005",
+            "secondary-fixed": "#ffd9e4",
+            "primary-container": "#4d8eff",
+            "surface": "#131313",
+            "primary": "#adc6ff",
+            "surface-dim": "#131313",
+            "inverse-primary": "#005ac2",
+            "tertiary-fixed-dim": "#4ae176",
+            "tertiary-container": "#00a74b",
+            "on-tertiary-fixed": "#002109",
+            "on-surface-variant": "#c2c6d6",
+            "inverse-on-surface": "#313030",
+            "surface-container-lowest": "#0e0e0e",
+            "outline": "#8c909f",
+            "on-secondary-fixed": "#3e0022",
+            "on-error-container": "#ffdad6",
+            "on-primary-container": "#00285d",
+            "on-secondary": "#640039",
+            "on-primary-fixed": "#001a42",
+            "on-secondary-container": "#ffbad3",
+            "tertiary-fixed": "#6bff8f",
+            "surface-variant": "#353534",
+            "surface-container": "#201f1f",
+            "on-primary": "#002e6a",
+            "surface-container-low": "#1c1b1b",
+            "on-tertiary-fixed-variant": "#005321",
+            "primary-fixed-dim": "#adc6ff",
+            "tertiary": "#4ae176",
+            "secondary": "#ffb0cd",
+            "primary-fixed": "#d8e2ff",
+            "surface-tint": "#adc6ff",
+            "on-surface": "#e5e2e1",
+            "on-tertiary-container": "#003111",
+            "error": "#ffb4ab",
+            "on-primary-fixed-variant": "#004395",
+            "on-background": "#e5e2e1",
+            "secondary-container": "#aa0266",
+            "on-secondary-fixed-variant": "#8c0053",
+            "surface-container-highest": "#353534"
+          },
+          "fontFamily": {
+            "display-lg": ["Hanken Grotesk"],
+            "body-lg": ["Inter"],
+            "body-sm": ["Inter"],
+            "label-caps": ["JetBrains Mono"],
+            "headline-md": ["Hanken Grotesk"]
+          }
+        },
+      },
+    }
+  </script>
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      vertical-align: middle;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #424754;
+      border-radius: 2px;
+    }
+
+    .bg-grid-subtle {
+      background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+
+    body {
+      background-color: transparent;
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+</head>
+
+<body class="text-on-background font-body-sm selection:bg-primary-container selection:text-on-primary-container">
+  <!-- Main Content -->
+  <main class="w-full bg-background bg-grid-subtle p-8 overflow-hidden rounded-xl border border-outline-variant/30">
+    <div class="max-w-[1440px] mx-auto space-y-8">
+      <!-- Hero Section: Operational Overview -->
+      <section class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        <div
+          class="lg:col-span-3 bg-surface-container-lowest border border-outline-variant rounded-xl p-6 relative overflow-hidden group">
+          <div class="flex justify-between items-start mb-4">
+            <div>
+              <h3 class="font-label-caps text-label-caps text-primary uppercase tracking-widest mb-1">Live Ingestion
+                Flow</h3>
+              <p class="text-on-surface-variant font-body-sm">Real-time health monitoring of upstream exchange sockets
+              </p>
+            </div>
+            <div class="flex gap-2">
+              <span
+                class="px-4 py-1 bg-tertiary-container/20 text-tertiary border border-tertiary/30 rounded-full font-label-caps text-[10px] font-bold">99.98%
+                HEALTH</span>
+              <span
+                class="px-4 py-1 bg-surface-variant text-on-surface-variant rounded-full font-label-caps text-[10px] font-bold">LAST
+                SYNC: 2S AGO</span>
+            </div>
+          </div>
+          <!-- Flow Diagram (Simplified Visual Representation) -->
+          <div class="h-48 w-full flex items-center justify-between px-6 mt-6 relative">
+            <!-- Background Lines -->
+            <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <svg class="w-full h-full opacity-20" viewbox="0 0 800 200">
+                <path class="text-primary" d="M50,100 Q200,50 400,100 T750,100" fill="none" stroke="currentColor"
+                  stroke-width="2"></path>
+                <path class="text-secondary" d="M50,100 Q200,150 400,100 T750,100" fill="none" stroke="currentColor"
+                  stroke-width="2"></path>
+              </svg>
+            </div>
+            <!-- Exchange Nodes -->
+            <div class="flex flex-col gap-4 z-10">
+              <div class="bg-surface-container-high border border-outline-variant p-2 rounded flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-tertiary shadow-[0_0_8px_#4ae176]"></span>
+                <span class="font-label-caps text-label-caps font-bold">BINANCE</span>
+              </div>
+              <div class="bg-surface-container-high border border-outline-variant p-2 rounded flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-tertiary shadow-[0_0_8px_#4ae176]"></span>
+                <span class="font-label-caps text-label-caps font-bold">COINBASE</span>
+              </div>
+              <div class="bg-surface-container-high border border-outline-variant p-2 rounded flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-error shadow-[0_0_8px_#ffb4ab]"></span>
+                <span class="font-label-caps text-label-caps font-bold">KRAKEN</span>
+              </div>
+            </div>
+            <!-- Central Processor -->
+            <div
+              class="z-10 bg-surface-container-highest border-2 border-primary w-32 h-32 rounded-full flex flex-col items-center justify-center text-center">
+              <span class="material-symbols-outlined text-primary text-3xl mb-1" data-icon="hub">hub</span>
+              <span
+                class="font-label-caps text-[10px] text-on-surface leading-tight font-bold">CENTRAL<br />INGESTION</span>
+            </div>
+            <!-- Output Destinations -->
+            <div class="flex flex-col gap-4 z-10">
+              <div class="bg-surface-container-high border border-outline-variant p-2 rounded flex items-center gap-2">
+                <span class="font-label-caps text-label-caps font-bold">MODEL_V12</span>
+                <span class="w-2 h-2 rounded-full bg-tertiary shadow-[0_0_8px_#4ae176]"></span>
+              </div>
+              <div class="bg-surface-container-high border border-outline-variant p-2 rounded flex items-center gap-2">
+                <span class="font-label-caps text-label-caps font-bold">TS_LAKE</span>
+                <span class="w-2 h-2 rounded-full bg-tertiary shadow-[0_0_8px_#4ae176]"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- PSI Summary Card -->
+        <div
+          class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 flex flex-col justify-between">
+          <div>
+            <h3 class="font-label-caps text-label-caps text-secondary uppercase tracking-widest mb-1 font-bold">
+              Aggregate PSI</h3>
+            <div class="text-display-lg font-display-lg text-secondary font-black text-5xl">0.084</div>
+            <p class="font-body-sm text-on-surface-variant mt-1">Population Stability Index</p>
+          </div>
+          <div class="mt-6">
+            <div class="flex justify-between font-label-caps text-[10px] mb-2 font-bold tracking-widest">
+              <span>NOMINAL</span>
+              <span>CRITICAL</span>
+            </div>
+            <div class="h-2 w-full bg-surface-container-high rounded-full overflow-hidden">
+              <div class="h-full bg-secondary w-[42%]"></div>
+            </div>
+            <p class="font-label-caps text-[10px] mt-2 text-tertiary font-bold tracking-widest">STABLE FLOW DETECTED</p>
+          </div>
+        </div>
+      </section>
+      <!-- Distribution Shift Visualizations -->
+      <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Feature Drift Plot 1 -->
+        <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6">
+          <div class="flex justify-between items-center mb-8">
+            <h3 class="font-headline-md text-2xl font-bold">Volume (24h) Dist Shift</h3>
+            <div class="bg-surface-variant p-2 rounded flex items-center gap-4">
+              <span class="font-label-caps text-label-caps text-on-surface-variant font-bold">KL-D: 0.12</span>
+              <span class="w-px h-3 bg-outline-variant"></span>
+              <span class="font-label-caps text-label-caps text-on-surface-variant font-bold">P-Val: 0.89</span>
+            </div>
+          </div>
+          <div class="h-64 flex items-end justify-between gap-2 px-4">
+            <!-- Dummy Histogram Bars -->
+            <div class="flex-1 bg-primary/20 border-t-2 border-primary h-[30%]"></div>
+            <div class="flex-1 bg-primary/20 border-t-2 border-primary h-[45%]"></div>
+            <div class="flex-1 bg-primary/20 border-t-2 border-primary h-[60%]"></div>
+            <div class="flex-1 bg-primary/20 border-t-2 border-primary h-[85%] relative">
+              <div class="absolute -top-12 left-0 right-0 bg-secondary/40 border-t-2 border-secondary h-24"></div>
+            </div>
+            <div class="flex-1 bg-primary/20 border-t-2 border-primary h-[70%]"></div>
+            <div class="flex-1 bg-primary/20 border-t-2 border-primary h-[40%]"></div>
+            <div class="flex-1 bg-primary/20 border-t-2 border-primary h-[20%]"></div>
+          </div>
+          <div
+            class="flex justify-between mt-4 px-4 text-[10px] font-label-caps text-on-surface-variant tracking-widest font-bold">
+            <span>LOW VOL</span>
+            <span>NORMALIZED RANGE</span>
+            <span>SPIKE</span>
+          </div>
+        </div>
+        <!-- Feature Drift Plot 2 -->
+        <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6">
+          <div class="flex justify-between items-center mb-8">
+            <h3 class="font-headline-md text-2xl font-bold">RSI Divergence Trend</h3>
+            <div class="bg-surface-variant p-2 rounded flex items-center gap-4">
+              <span class="font-label-caps text-label-caps text-on-surface-variant font-bold">KL-D: 0.04</span>
+              <span class="w-px h-3 bg-outline-variant"></span>
+              <span class="font-label-caps text-label-caps text-on-surface-variant font-bold">P-Val: 0.94</span>
+            </div>
+          </div>
+          <div class="h-64 relative">
+            <!-- Overlay Chart Lines -->
+            <svg class="w-full h-full" preserveaspectratio="none" viewbox="0 0 400 200">
+              <path d="M0,150 Q50,140 100,160 T200,120 T300,140 T400,100" fill="none" stroke="#adc6ff" stroke-width="2">
+              </path>
+              <path d="M0,155 Q50,145 100,155 T200,125 T300,145 T400,105" fill="none" stroke="#ffb0cd"
+                stroke-dasharray="4" stroke-width="1.5"></path>
+            </svg>
+            <div class="absolute top-0 right-0 flex flex-col gap-2">
+              <div class="flex items-center gap-2">
+                <div class="w-3 h-0.5 bg-primary"></div>
+                <span class="font-label-caps text-[10px] font-bold tracking-widest">TRAIN</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="w-3 h-0.5 bg-secondary border-dashed border-t"></div>
+                <span class="font-label-caps text-[10px] font-bold tracking-widest">INFERENCE</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Alert Ledger -->
+      <section class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden">
+        <div class="p-6 border-b border-outline-variant flex justify-between items-center">
+          <h3 class="font-headline-md text-2xl font-bold">Automated Alert Ledger</h3>
+          <div class="flex gap-4">
+            <button
+              onclick="openBtcModal('Filter Alerts', '<p>Use severity levels to filter drift alerts:</p><ul style=\'list-style:disc;padding-left:20px;margin-top:10px;\'>  <li style=\'margin-bottom:6px;\'><span style=\'color:#ffb4ab;font-weight:700;\'>CRITICAL</span> — Drift Score &gt; threshold (active)</li><li style=\'margin-bottom:6px;\'><span style=\'color:#ffb0cd;font-weight:700;\'>WARNING</span> — Drift Score moderately elevated</li><li style=\'margin-bottom:6px;\'><span style=\'color:#4ae176;font-weight:700;\'>RESOLVED</span> — Drift corrected by retraining</li></ul><p style=\'margin-top:12px;color:#8c909f;font-size:12px;\'>All alerts are sourced live from <code>reports/drift.json</code> via Evidently AI.</p>')"
+              class="flex items-center gap-2 px-4 py-2 bg-surface-container-high border border-outline-variant rounded hover:bg-surface-variant transition-colors cursor-pointer">
+              <span class="material-symbols-outlined text-sm" data-icon="filter_list">filter_list</span>
+              <span class="font-label-caps text-label-caps font-bold">Filter</span>
+            </button>
+            <button
+              onclick="openBtcModal('Export Drift Report', '<p>Your drift report is available in the following formats:</p><ul style=\'list-style:disc;padding-left:20px;margin-top:10px;\'>  <li style=\'margin-bottom:8px;\'><strong>JSON</strong> — <code>reports/drift.json</code> (machine-readable, full metrics)</li><li style=\'margin-bottom:8px;\'><strong>HTML</strong> — <code>reports/drift_report.html</code> (Evidently visual report)</li></ul><p style=\'margin-top:12px;color:#8c909f;font-size:12px;\'>Run <code>python src/monitoring/drift_report.py</code> to regenerate.</p>', &quot;<a href=\'https://docs.evidentlyai.com\' target=\'_blank\' style=\'background:#adc6ff;color:#002e6a;padding:8px 16px;border-radius:6px;font-size:12px;font-weight:700;text-decoration:none;\'>Open Evidently Docs</a>&quot;)"
+              class="flex items-center gap-2 px-4 py-2 bg-surface-container-high border border-outline-variant rounded hover:bg-surface-variant transition-colors cursor-pointer">
+              <span class="material-symbols-outlined text-sm" data-icon="download">download</span>
+              <span class="font-label-caps text-label-caps font-bold">Export</span>
+            </button>
+          </div>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr
+                class="bg-surface-container-low font-label-caps text-label-caps text-on-surface-variant tracking-wider">
+                <th class="px-6 py-4 font-bold">Timestamp</th>
+                <th class="px-6 py-4 font-bold">Metric / Feature</th>
+                <th class="px-6 py-4 font-bold">Severity</th>
+                <th class="px-6 py-4 font-bold">Drift Score</th>
+                <th class="px-6 py-4 font-bold">Status</th>
+                <th class="px-6 py-4 font-bold">Action</th>
+              </tr>
+            </thead>
+            <tbody class="font-body-sm divide-y divide-outline-variant">
+
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </main>
+  {modal_utility}
+</body>
+
+</html>
