@@ -1,4 +1,7 @@
 [core]
-    remote = origin
+    remote = dagshub_s3
 ['remote "origin"']
     url = https://dagshub.com/vaishnavtannushree/CryptoMLOps-Bitcoin-Price-Forecasting.dvc
+['remote "dagshub_s3"']
+    url = s3://CryptoMLOps-Bitcoin-Price-Forecasting
+    endpointurl = https://dagshub.com/api/v1/repo-buckets/s3/vaishnavtannushree

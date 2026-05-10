@@ -190,3 +190,41 @@ stages:
       md5: 31a0ffdc53d3a86df9870a8dc07aac9d.dir
       size: 5398504
       nfiles: 4
+  Model_Ensemble_and_Evaluation:
+    cmd: python -m src.pipelines.train_flow
+    deps:
+    - path: artifacts/scaler.pkl
+      hash: md5
+      md5: 6e63f48f14c0a30b2f384d2fd2086b35
+      size: 2359
+    - path: data/processed/
+      hash: md5
+      md5: 31a0ffdc53d3a86df9870a8dc07aac9d.dir
+      size: 5398504
+      nfiles: 4
+    - path: params.yaml
+      hash: md5
+      md5: 06b3925cae00ba8ce0a689c47e4af50f
+      size: 554
+    - path: src/models/
+      hash: md5
+      md5: 4ac993c19ce0a34549c831536450a4e2.dir
+      size: 22593
+      nfiles: 12
+    - path: src/pipelines/train_flow.py
+      hash: md5
+      md5: 2bcc7e3e1867594edc32f556be2cce8d
+      size: 11754
+    outs:
+    - path: artifacts/lstm_model.pth
+      hash: md5
+      md5: 8d7f1b64e876855e2600641404190729
+      size: 885301
+    - path: artifacts/xgb_model.pkl
+      hash: md5
+      md5: 8f375bed5dcb5e2d59bf09a29b99a904
+      size: 124544
+    - path: metrics/scores.json
+      hash: md5
+      md5: 9e8f6d5af084e3e55406da92b0c4cab2
+      size: 1038
