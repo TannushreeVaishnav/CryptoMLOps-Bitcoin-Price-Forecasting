@@ -1,0 +1,35 @@
+stages:
+  preprocess:
+    cmd: python -m src.pipelines.preprocess_flow
+    deps:
+      - data/raw/bitcoin_investing.csv
+      - src/data/loader.py
+      - src/data/features.py
+      - src/data/splitter.py
+    outs:
+      - data/processed/features.csv
+      - data/processed/splits/train.csv
+      - data/processed/splits/val.csv
+      - data/processed/splits/test.csv
+      - artifacts/scaler.pkl
+    params:
+      - params.yaml:
+          - preprocessing
+
+  train:
+    cmd: python -m src.pipelines.train_flow
+    deps:
+      - data/processed/splits/train.csv
+      - data/processed/splits/val.csv
+      - data/processed/splits/test.csv
+      - artifacts/scaler.pkl
+      - src/models/lstm_model.py
+      - src/models/xgb_model.py
+    params:
+      - params.yaml:
+          - lstm
+          - xgboost
+          - ensemble
+    metrics:
+      - metrics/scores.json:
+          cache: false

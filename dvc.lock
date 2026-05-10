@@ -5,8 +5,8 @@ stages:
     deps:
     - path: data/raw/bitcoin_investing.csv
       hash: md5
-      md5: cd349da1b430a02b4fcee6e711e73ede
-      size: 272351
+      md5: ffe3788aeb9166776043956e70a2b6bd
+      size: 247987
     - path: src/data/features.py
       hash: md5
       md5: 3168a5eeb6422d2685926df3cb7cd6f0
@@ -31,12 +31,12 @@ stages:
       size: 2359
     - path: data/processed/features.csv
       hash: md5
-      md5: cd9e0a6edad6e19054c0daff03371472
-      size: 2341650
+      md5: 26615fb67e1b6f0b83a1b7c9cfff56d3
+      size: 2342964
     - path: data/processed/splits/test.csv
       hash: md5
-      md5: 4abf1138d48ddaad291699e7e9f13bb4
-      size: 703591
+      md5: 17b3037fcf513341527c69772e31a804
+      size: 705226
     - path: data/processed/splits/train.csv
       hash: md5
       md5: 09ec311ed7a85972b2f259776924a914
@@ -54,8 +54,8 @@ stages:
       size: 2359
     - path: data/processed/splits/test.csv
       hash: md5
-      md5: 4abf1138d48ddaad291699e7e9f13bb4
-      size: 703591
+      md5: 17b3037fcf513341527c69772e31a804
+      size: 705226
     - path: data/processed/splits/train.csv
       hash: md5
       md5: 09ec311ed7a85972b2f259776924a914
@@ -98,5 +98,5 @@ stages:
     outs:
     - path: metrics/scores.json
       hash: md5
-      md5: 60a0e5660e34e9115a43f0bb9840c27d
-      size: 286
+      md5: 1387d375e1318ffd6b2edf8c43b0c373
+      size: 288
