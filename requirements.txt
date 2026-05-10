@@ -17,4 +17,4 @@ dvc
 prophet
 dagshub
 tabulate
-
+protobuf<4.0.0
