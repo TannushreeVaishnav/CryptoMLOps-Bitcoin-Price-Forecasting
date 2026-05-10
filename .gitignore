@@ -1,0 +1,31 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environments
+.venv/
+venv/
+ENV/
+env/
+
+# ML/DL Logs and Artifacts
+mlruns/
+mlflow.db
+mlflow_tracking.db
+lightning_logs/
+metrics/
+reports/
+artifacts/models/
+*.pth
+*.pkl
+
+# DVC local configs
+.dvc/config.local
+
+# Secrets
+.env
+
+# OS files
+.DS_Store
+Thumbs.db

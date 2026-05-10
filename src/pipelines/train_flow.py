@@ -214,7 +214,6 @@ def train():
     
     # Evaluate baselines
     from src.models.baselines import evaluate_baselines
-    import joblib
     scaler = joblib.load("artifacts/scaler.pkl")
     baseline_metrics = evaluate_baselines(train_df, val_df, test_df, target, p_lstm["sequence_length"], scaler)
     metrics.update(baseline_metrics)
