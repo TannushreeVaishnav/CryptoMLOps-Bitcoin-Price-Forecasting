@@ -16,9 +16,12 @@ mlflow_tracking.db
 lightning_logs/
 metrics/
 reports/
-artifacts/models/
+artifacts/
 *.pth
 *.pkl
+*.ckpt
+*.h5
+*.pt
 
 # DVC local configs
 .dvc/config.local
