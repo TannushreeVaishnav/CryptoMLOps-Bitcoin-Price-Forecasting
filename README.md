@@ -9,6 +9,12 @@
 ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
 ![MLflow](https://img.shields.io/badge/MLflow-0194E2?style=for-the-badge&logo=mlflow&logoColor=white)
 
+<br/>
+
+### 🌟 [View Live Dashboard on Streamlit Cloud](https://cryptomlops-bitcoin-price-forecasting-8ibejvcgnqsfkje8sg8e3t.streamlit.app/) 🌟
+
+<br/>
+
 An end-to-end Machine Learning Operations (MLOps) platform predicting Bitcoin prices utilizing an advanced **LSTM + XGBoost Ensemble Model**. Built with a state-of-the-art UI dashboard, fully reproducible data pipelines via DVC, experiment tracking with MLflow, and continuous integration via GitHub Actions.
 
 </div>
