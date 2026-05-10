@@ -1,0 +1,27 @@
+preprocessing:
+  train_end:  "2022-12-31"
+  val_end:    "2023-12-31"
+
+lstm:
+  sequence_length: 30       # 30 days of daily candles as input window
+  hidden_size: 128
+  num_layers: 2
+  dropout: 0.2
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  batch_size: 32
+  max_epochs: 100
+  early_stopping_patience: 10
+
+xgboost:
+  n_estimators: 500
+  max_depth: 6
+  learning_rate: 0.05
+  subsample: 0.8
+  colsample_bytree: 0.8
+  early_stopping_rounds: 20
+  tree_method: hist           # CPU-efficient; no GPU needed
+
+ensemble:
+  lstm_weight: 0.45
+  xgb_weight: 0.55

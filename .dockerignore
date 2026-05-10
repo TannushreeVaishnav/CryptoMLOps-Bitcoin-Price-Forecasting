@@ -1,0 +1,9 @@
+venv/
+.git/
+.dvc/
+mlruns/
+lightning_logs/
+notebooks/
+__pycache__/
+*.pyc
+*.db

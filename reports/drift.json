@@ -1,0 +1,24 @@
+{
+  "version": "0.4.0",
+  "metrics": [
+    {
+      "metric": "DataDriftTable",
+      "result": {
+        "drift_by_columns": {
+          "RSI": {
+            "drift_score": 0.05,
+            "drift_detected": false
+          },
+          "MACD": {
+            "drift_score": 0.22,
+            "drift_detected": true
+          },
+          "Volume_MA_7": {
+            "drift_score": 0.11,
+            "drift_detected": false
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+version: '3.8'
+services:
+
+  mlflow:
+    build: 
+      context: ..
+      dockerfile: infra/mlflow.dockerfile
+    ports: ["5000:5000"]
+    volumes: ["../mlruns:/app/mlruns", "../mlflow_tracking.db:/app/mlflow_tracking.db"]
+
+  api:
+    build: 
+      context: ..
+      dockerfile: infra/Dockerfile
+    ports: ["8000:8000"]
+    depends_on: [mlflow]
+    environment:
+      MLFLOW_TRACKING_URI: http://mlflow:5000
+    volumes:
+      - "../src:/app/src"
+      - "../data:/app/data"
+      - "../artifacts:/app/artifacts"
+
+  dashboard:
+    build: 
+      context: ..
+      dockerfile: infra/Dockerfile
+    command: streamlit run dashboard/app.py --server.port=8501
+    ports: ["8501:8501"]
+    depends_on: [api]
+    environment:
+      MLFLOW_TRACKING_URI: http://mlflow:5000
+    volumes:
+      - "../dashboard:/app/dashboard"
+      - "../data:/app/data"
+      - "../artifacts:/app/artifacts"
+      - "../metrics:/app/metrics"
+      - "../reports:/app/reports"

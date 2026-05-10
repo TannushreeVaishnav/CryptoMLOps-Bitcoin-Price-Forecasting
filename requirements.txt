@@ -1,0 +1,17 @@
+pandas
+ta
+numpy
+yfinance
+torch
+pytorch-lightning
+xgboost
+shap
+mlflow
+prefect
+evidently
+fastapi
+uvicorn
+streamlit
+scikit-learn
+dvc
+pytest
