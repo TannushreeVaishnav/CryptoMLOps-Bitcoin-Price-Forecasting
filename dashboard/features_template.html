@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Signal Attribution | Bitcoin Price Forecasting Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;900&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #424754; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #8c909f; }
+        body { background-color: transparent; margin: 0; padding: 0; }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "background": "#131313",
+                        "secondary-fixed-dim": "#ffb0cd",
+                        "error-container": "#93000a",
+                        "surface-bright": "#3a3939",
+                        "on-tertiary": "#003915",
+                        "surface-container-high": "#2a2a2a",
+                        "inverse-surface": "#e5e2e1",
+                        "outline-variant": "#424754",
+                        "on-error": "#690005",
+                        "secondary-fixed": "#ffd9e4",
+                        "primary-container": "#4d8eff",
+                        "surface": "#131313",
+                        "primary": "#adc6ff",
+                        "surface-dim": "#131313",
+                        "inverse-primary": "#005ac2",
+                        "tertiary-fixed-dim": "#4ae176",
+                        "tertiary-container": "#00a74b",
+                        "on-tertiary-fixed": "#002109",
+                        "on-surface-variant": "#c2c6d6",
+                        "inverse-on-surface": "#313030",
+                        "surface-container-lowest": "#0e0e0e",
+                        "outline": "#8c909f",
+                        "on-secondary-fixed": "#3e0022",
+                        "on-error-container": "#ffdad6",
+                        "on-primary-container": "#00285d",
+                        "on-secondary": "#640039",
+                        "on-primary-fixed": "#001a42",
+                        "on-secondary-container": "#ffbad3",
+                        "tertiary-fixed": "#6bff8f",
+                        "surface-variant": "#353534",
+                        "surface-container": "#201f1f",
+                        "on-primary": "#002e6a",
+                        "surface-container-low": "#1c1b1b",
+                        "on-tertiary-fixed-variant": "#005321",
+                        "primary-fixed-dim": "#adc6ff",
+                        "tertiary": "#4ae176",
+                        "secondary": "#ffb0cd",
+                        "primary-fixed": "#d8e2ff",
+                        "surface-tint": "#adc6ff",
+                        "on-surface": "#e5e2e1",
+                        "on-tertiary-container": "#003111",
+                        "error": "#ffb4ab",
+                        "on-primary-fixed-variant": "#004395",
+                        "on-background": "#e5e2e1",
+                        "secondary-container": "#aa0266",
+                        "on-secondary-fixed-variant": "#8c0053",
+                        "surface-container-highest": "#353534"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Hanken Grotesk"],
+                        "body-lg": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "label-caps": ["JetBrains Mono"],
+                        "headline-md": ["Hanken Grotesk"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="text-on-background font-body-sm selection:bg-primary-container selection:text-on-primary-container">
+<!-- Main Content Canvas -->
+<main class="w-full px-8 py-6 overflow-x-hidden rounded-xl border border-outline-variant/30 bg-background relative">
+<!-- Header Section -->
+<section class="mb-10">
+<h2 class="font-display-lg text-4xl font-bold text-on-background mb-2 tracking-tight">Feature Importance Analysis</h2>
+<p class="font-body-lg text-lg text-on-surface-variant opacity-70">Decomposing predictive weights across temporal and market dynamics.</p>
+</section>
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-8">
+<!-- Center Column: Visual Analysis (Bento) -->
+<div class="xl:col-span-9 space-y-8">
+<!-- Top Row: Local Impact vs SHAP -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Current Prediction Impact -->
+<div class="lg:col-span-1 bg-surface-container-lowest border border-outline-variant rounded-xl p-6 flex flex-col">
+<span class="font-label-caps text-xs text-secondary-fixed-dim mb-4 tracking-wider font-bold">LOCAL IMPACT (CURRENT)</span>
+<div class="flex items-baseline gap-2 mb-6">
+<span class="font-display-lg text-4xl font-bold text-on-background">+$1,240</span>
+<span class="material-symbols-outlined text-tertiary">trending_up</span>
+</div>
+<div class="space-y-4 grow">
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-sm">database</span>
+<span class="font-body-sm text-on-surface opacity-80">RSI_14</span>
+</div>
+<span class="text-tertiary font-label-caps font-bold text-xs">+42.1%</span>
+</div>
+<div class="h-1 bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-tertiary w-[42%]"></div>
+</div>
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-sm">forum</span>
+<span class="font-body-sm text-on-surface opacity-80">EMA_12</span>
+</div>
+<span class="text-tertiary font-label-caps font-bold text-xs">+28.4%</span>
+</div>
+<div class="h-1 bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-tertiary w-[28%]"></div>
+</div>
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-error text-sm">account_balance</span>
+<span class="font-body-sm text-on-surface opacity-80">close_lag_1</span>
+</div>
+<span class="text-error font-label-caps font-bold text-xs">-15.2%</span>
+</div>
+<div class="h-1 bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-error w-[15%]"></div>
+</div>
+</div>
+<div class="mt-8 pt-4 border-t border-outline-variant flex items-center justify-between">
+<span class="font-label-caps text-[10px] opacity-40 uppercase tracking-widest">Last updated: Just now</span>
+<span class="material-symbols-outlined text-on-surface-variant text-sm cursor-help">info</span>
+</div>
+</div>
+<!-- SHAP Summary View -->
+<div class="lg:col-span-2 bg-surface-container-lowest border border-outline-variant rounded-xl p-6 overflow-hidden">
+<div class="flex justify-between items-start mb-6">
+<div>
+<span class="font-label-caps text-xs text-secondary-fixed-dim uppercase tracking-wider font-bold">SHAP Summary (Global Influence)</span>
+<h3 class="font-headline-md text-2xl font-bold text-on-background mt-1">Feature Contribution Range</h3>
+</div>
+<div class="flex gap-2 mt-2">
+<div class="flex items-center gap-1">
+<div class="w-2 h-2 rounded-full bg-error"></div>
+<span class="text-[10px] font-label-caps">Low Value</span>
+</div>
+<div class="flex items-center gap-1">
+<div class="w-2 h-2 rounded-full bg-tertiary"></div>
+<span class="text-[10px] font-label-caps">High Value</span>
+</div>
+</div>
+</div>
+<!-- Mock SHAP Dot Chart -->
+<div class="space-y-2 relative">
+<!-- Horizontal Grid Lines -->
+<div class="absolute inset-0 flex flex-col justify-between opacity-10 pointer-events-none">
+<div class="border-b border-on-background w-full h-0"></div>
+<div class="border-b border-on-background w-full h-0"></div>
+<div class="border-b border-on-background w-full h-0"></div>
+<div class="border-b border-on-background w-full h-0"></div>
+</div>
+<!-- Feature Rows -->
+<div class="grid grid-cols-4 items-center h-10 border-b border-outline-variant/30">
+<span class="font-label-caps text-[11px] opacity-80">close_lag_1</span>
+<div class="col-span-3 relative h-full flex items-center">
+<div class="absolute inset-0 bg-gradient-to-r from-transparent via-tertiary/20 to-transparent"></div>
+<div class="flex gap-1 ml-[40%]">
+<div class="w-2 h-2 rounded-full bg-tertiary/80 blur-[1px]"></div>
+<div class="w-2 h-2 rounded-full bg-tertiary/60"></div>
+<div class="w-2 h-2 rounded-full bg-tertiary shadow-[0_0_8px_#4ae176]"></div>
+<div class="w-2 h-2 rounded-full bg-tertiary/60"></div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-4 items-center h-10 border-b border-outline-variant/30">
+<span class="font-label-caps text-[11px] opacity-80">close_lag_2</span>
+<div class="col-span-3 relative h-full flex items-center">
+<div class="flex gap-1 ml-[20%]">
+<div class="w-2 h-2 rounded-full bg-error shadow-[0_0_8px_#ffb4ab]"></div>
+<div class="w-2 h-2 rounded-full bg-error/40"></div>
+<div class="w-2 h-2 rounded-full bg-tertiary/50"></div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-4 items-center h-10 border-b border-outline-variant/30">
+<span class="font-label-caps text-[11px] opacity-80">RSI_14</span>
+<div class="col-span-3 relative h-full flex items-center">
+<div class="flex gap-1 ml-[55%]">
+<div class="w-2 h-2 rounded-full bg-tertiary/40"></div>
+<div class="w-2 h-2 rounded-full bg-tertiary shadow-[0_0_8px_#4ae176]"></div>
+<div class="w-2 h-2 rounded-full bg-tertiary/70"></div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-4 items-center h-10">
+<span class="font-label-caps text-[11px] opacity-80">EMA_12</span>
+<div class="col-span-3 relative h-full flex items-center">
+<div class="flex gap-1 ml-[10%]">
+<div class="w-2 h-2 rounded-full bg-error shadow-[0_0_8px_#ffb4ab]"></div>
+<div class="w-2 h-2 rounded-full bg-error/70"></div>
+<div class="w-2 h-2 rounded-full bg-error/30"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Row: Correlation Heatmap -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+<div>
+<span class="font-label-caps text-xs text-secondary-fixed-dim uppercase tracking-wider font-bold">Multi-Factor Analysis</span>
+<h3 class="font-headline-md text-2xl font-bold text-on-background mt-1">Feature Correlation Heatmap</h3>
+</div>
+<div class="flex bg-surface-container-high rounded p-1">
+<button onclick="openBtcModal('Pearson Correlation', '<p>The heatmap shows <strong>Pearson linear correlation</strong> between your top BTC features.</p><ul style=\'list-style:disc;padding-left:20px;margin-top:10px;\'>  <li style=\'margin-bottom:6px;\'><strong style=\'color:#adc6ff;\'>Blue cells</strong> = Positive correlation (features move together)</li>  <li style=\'margin-bottom:6px;\'><strong style=\'color:#ffb4ab;\'>Red cells</strong> = Negative correlation (features move inversely)</li>  <li style=\'margin-bottom:6px;\'>Darker = Stronger relationship</li></ul><p style=\'margin-top:10px;color:#8c909f;font-size:12px;\'>Computed live from <code>data/processed/splits/test.csv</code> using Close, Volume, RSI_14, EMA_12, MACD columns.</p>')" class="px-4 py-1 font-label-caps text-[10px] bg-secondary-container text-on-secondary-container rounded font-bold tracking-widest cursor-pointer">PEARSON</button>
+<button onclick="openBtcModal('Spearman Correlation', '<p><strong>Spearman rank correlation</strong> measures monotonic (non-linear) relationships between features.</p><p style=\'margin-top:10px;\'>Unlike Pearson, it handles outliers better and is ideal for financial time-series data with fat tails.</p><p style=\'margin-top:10px;color:#8c909f;font-size:12px;\'>To compute Spearman from your data, run:</p><pre style=\'background:#1c1b1b;padding:12px;border-radius:6px;font-size:12px;margin-top:8px;overflow:auto;\'>df.corr(method="spearman")</pre>')" class="px-4 py-1 font-label-caps text-[10px] text-on-surface-variant hover:text-on-surface tracking-widest cursor-pointer">SPEARMAN</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<div class="min-w-[600px] grid grid-cols-6 gap-1">
+<!-- Empty top-left corner -->
+<div class="aspect-square"></div>
+<div class="aspect-square flex items-center justify-center font-label-caps text-[10px] text-center rotate-45">Close</div>
+<div class="aspect-square flex items-center justify-center font-label-caps text-[10px] text-center rotate-45">Volume</div>
+<div class="aspect-square flex items-center justify-center font-label-caps text-[10px] text-center rotate-45">RSI_14</div>
+<div class="aspect-square flex items-center justify-center font-label-caps text-[10px] text-center rotate-45">EMA_12</div>
+<div class="aspect-square flex items-center justify-center font-label-caps text-[10px] text-center rotate-45">MACD</div>
+<!-- Rows -->
+<div class="aspect-square flex items-center justify-end pr-2 font-label-caps text-[10px]">Close</div>
+<div class="aspect-square rounded bg-primary/90 flex items-center justify-center text-[10px] font-bold text-on-primary">1.00</div>
+<div class="aspect-square rounded bg-primary/40 flex items-center justify-center text-[10px] text-on-primary-container">0.45</div>
+<div class="aspect-square rounded bg-primary/10 flex items-center justify-center text-[10px] text-on-surface">0.12</div>
+<div class="aspect-square rounded bg-primary/60 flex items-center justify-center text-[10px] text-on-primary-container font-bold">0.68</div>
+<div class="aspect-square rounded bg-error/20 flex items-center justify-center text-[10px] text-on-error-container">-0.21</div>
+<div class="aspect-square flex items-center justify-end pr-2 font-label-caps text-[10px]">Volume</div>
+<div class="aspect-square rounded bg-primary/40 flex items-center justify-center text-[10px] text-on-primary-container">0.45</div>
+<div class="aspect-square rounded bg-primary/90 flex items-center justify-center text-[10px] font-bold text-on-primary">1.00</div>
+<div class="aspect-square rounded bg-primary/5 flex items-center justify-center text-[10px] text-on-surface">0.02</div>
+<div class="aspect-square rounded bg-primary/30 flex items-center justify-center text-[10px] text-on-surface-variant">0.31</div>
+<div class="aspect-square rounded bg-error/40 flex items-center justify-center text-[10px] text-on-error-container">-0.48</div>
+<div class="aspect-square flex items-center justify-end pr-2 font-label-caps text-[10px]">RSI_14</div>
+<div class="aspect-square rounded bg-primary/10 flex items-center justify-center text-[10px] text-on-surface">0.12</div>
+<div class="aspect-square rounded bg-primary/5 flex items-center justify-center text-[10px] text-on-surface">0.02</div>
+<div class="aspect-square rounded bg-primary/90 flex items-center justify-center text-[10px] font-bold text-on-primary">1.00</div>
+<div class="aspect-square rounded bg-primary/10 flex items-center justify-center text-[10px] text-on-surface">0.08</div>
+<div class="aspect-square rounded bg-primary/5 flex items-center justify-center text-[10px] text-on-surface">0.01</div>
+<div class="aspect-square flex items-center justify-end pr-2 font-label-caps text-[10px]">EMA_12</div>
+<div class="aspect-square rounded bg-primary/60 flex items-center justify-center text-[10px] text-on-primary-container font-bold">0.68</div>
+<div class="aspect-square rounded bg-primary/30 flex items-center justify-center text-[10px] text-on-surface-variant">0.31</div>
+<div class="aspect-square rounded bg-primary/10 flex items-center justify-center text-[10px] text-on-surface">0.08</div>
+<div class="aspect-square rounded bg-primary/90 flex items-center justify-center text-[10px] font-bold text-on-primary">1.00</div>
+<div class="aspect-square rounded bg-error/10 flex items-center justify-center text-[10px] text-on-error-container">-0.05</div>
+<div class="aspect-square flex items-center justify-end pr-2 font-label-caps text-[10px]">MACD</div>
+<div class="aspect-square rounded bg-error/20 flex items-center justify-center text-[10px] text-on-error-container">-0.21</div>
+<div class="aspect-square rounded bg-error/40 flex items-center justify-center text-[10px] text-on-error-container">-0.48</div>
+<div class="aspect-square rounded bg-primary/5 flex items-center justify-center text-[10px] text-on-surface">0.01</div>
+<div class="aspect-square rounded bg-error/10 flex items-center justify-center text-[10px] text-on-error-container">-0.05</div>
+<div class="aspect-square rounded bg-primary/90 flex items-center justify-center text-[10px] font-bold text-on-primary">1.00</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Editorial & Data Sources -->
+<div class="xl:col-span-3 space-y-8">
+<!-- Market Regime Sidebar -->
+<div class="bg-primary-container text-on-primary-container p-6 rounded-xl shadow-lg border border-primary/20">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined">newspaper</span>
+<span class="font-label-caps text-xs font-bold uppercase tracking-widest">Regime Analysis</span>
+</div>
+<h3 class="font-display-lg text-2xl font-black mb-4 leading-tight">Momentum-Driven Era</h3>
+<div class="font-body-sm space-y-4 opacity-90 leading-relaxed text-sm">
+<p>Current market dynamics show strong reliance on short-term price momentum (`close_lag_1`) and moving average convergence (`EMA_12`).</p>
+<p>Volatility indicators suggest the model is optimizing for sudden breakout scenarios rather than long-term mean reversion.</p>
+</div>
+<a href="https://shap.readthedocs.io/en/latest/example_notebooks/overviews/An%20introduction%20to%20explainable%20AI%20with%20Shapley%20values.html" target="_blank" class="block mt-6">
+<button class="w-full py-3 border border-on-primary-container/30 rounded hover:bg-on-primary-container hover:text-primary-container transition-colors font-bold uppercase tracking-widest text-[10px] cursor-pointer">View SHAP Documentation</button>
+</a>
+</div>
+<!-- Data Sources -->
+<div class="bg-surface-container-low border border-outline-variant rounded-xl p-6">
+<span class="font-label-caps text-xs text-on-surface-variant block mb-6 uppercase font-bold tracking-widest">Feature Groups</span>
+<div class="space-y-6">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded bg-tertiary-container/20 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined">show_chart</span>
+</div>
+<div>
+<p class="font-bold text-on-surface text-sm">Momentum</p>
+<p class="text-[10px] opacity-60">Lags, ROC, Returns</p>
+</div>
+<div class="ml-auto w-2 h-2 rounded-full bg-tertiary shadow-[0_0_8px_#4ae176]"></div>
+</div>
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded bg-secondary-container/20 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined">moving</span>
+</div>
+<div>
+<p class="font-bold text-on-surface text-sm">Trend</p>
+<p class="text-[10px] opacity-60">SMA, EMA, MACD</p>
+</div>
+<div class="ml-auto w-2 h-2 rounded-full bg-tertiary shadow-[0_0_8px_#4ae176]"></div>
+</div>
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded bg-primary-container/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">bubble_chart</span>
+</div>
+<div>
+<p class="font-bold text-on-surface text-sm">Volatility</p>
+<p class="text-[10px] opacity-60">Bollinger Bands, ATR</p>
+</div>
+<div class="ml-auto w-2 h-2 rounded-full bg-tertiary shadow-[0_0_8px_#4ae176]"></div>
+</div>
+</div>
+</div>
+<!-- Visual Accent Card -->
+<div class="relative group h-48 rounded-xl overflow-hidden border border-outline-variant cursor-pointer hover:ring-2 hover:ring-primary transition-all">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="data:image/png;base64,{shap_image_base64}"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent flex flex-col justify-end p-6">
+<span class="font-label-caps text-[10px] text-primary tracking-widest font-bold mb-1">XGBOOST FEATURE RANKING</span>
+<p class="font-bold text-on-surface text-sm">Tree Explainer Initialized</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+{modal_utility}</body></html>

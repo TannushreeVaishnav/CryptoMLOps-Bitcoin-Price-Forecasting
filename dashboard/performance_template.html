@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bitcoin Price Forecasting - Model Diagnostics</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700;900&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    body {
+      background-color: transparent;
+      color: #e5e2e1;
+      -webkit-font-smoothing: antialiased;
+      margin: 0;
+      padding: 0;
+    }
+    /* Technical Grid Overlay Effect */
+    .tech-grid {
+      background-image: radial-gradient(#ffffff10 1px, transparent 1px);
+      background-size: 32px 32px;
+    }
+    .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #424754; border-radius: 2px; }
+  </style>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "background": "#131313",
+            "secondary-fixed-dim": "#ffb0cd",
+            "error-container": "#93000a",
+            "surface-bright": "#3a3939",
+            "on-tertiary": "#003915",
+            "surface-container-high": "#2a2a2a",
+            "inverse-surface": "#e5e2e1",
+            "outline-variant": "#424754",
+            "on-error": "#690005",
+            "secondary-fixed": "#ffd9e4",
+            "primary-container": "#4d8eff",
+            "surface": "#131313",
+            "primary": "#adc6ff",
+            "surface-dim": "#131313",
+            "inverse-primary": "#005ac2",
+            "tertiary-fixed-dim": "#4ae176",
+            "tertiary-container": "#00a74b",
+            "on-tertiary-fixed": "#002109",
+            "on-surface-variant": "#c2c6d6",
+            "inverse-on-surface": "#313030",
+            "surface-container-lowest": "#0e0e0e",
+            "outline": "#8c909f",
+            "on-secondary-fixed": "#3e0022",
+            "on-error-container": "#ffdad6",
+            "on-primary-container": "#00285d",
+            "on-secondary": "#640039",
+            "on-primary-fixed": "#001a42",
+            "on-secondary-container": "#ffbad3",
+            "tertiary-fixed": "#6bff8f",
+            "surface-variant": "#353534",
+            "surface-container": "#201f1f",
+            "on-primary": "#002e6a",
+            "surface-container-low": "#1c1b1b",
+            "on-tertiary-fixed-variant": "#005321",
+            "primary-fixed-dim": "#adc6ff",
+            "tertiary": "#4ae176",
+            "secondary": "#ffb0cd",
+            "primary-fixed": "#d8e2ff",
+            "surface-tint": "#adc6ff",
+            "on-surface": "#e5e2e1",
+            "on-tertiary-container": "#003111",
+            "error": "#ffb4ab",
+            "on-primary-fixed-variant": "#004395",
+            "on-background": "#e5e2e1",
+            "secondary-container": "#aa0266",
+            "on-secondary-fixed-variant": "#8c0053",
+            "surface-container-highest": "#353534"
+          },
+          "fontFamily": {
+            "display-lg": ["Hanken Grotesk"],
+            "body-lg": ["Inter"],
+            "body-sm": ["Inter"],
+            "label-caps": ["JetBrains Mono"],
+            "headline-md": ["Hanken Grotesk"]
+          }
+        },
+      },
+    }
+  </script>
+</head>
+<body class="font-body-sm text-on-surface selection:bg-primary-container selection:text-on-primary-container">
+<!-- Main Content Canvas -->
+<main class="w-full max-w-[1440px] mx-auto p-8 space-y-8 tech-grid rounded-xl border border-outline-variant/30 overflow-hidden bg-background">
+<!-- Header Metrics -->
+<section class="grid grid-cols-1 md:grid-cols-4 gap-6">
+<div class="bg-[#0a0a0a] border border-[#1f2937] p-6 flex flex-col rounded-xl">
+<span class="font-label-caps text-xs text-on-surface-variant mb-2 uppercase font-bold tracking-widest">Overall Stability</span>
+<span class="font-display-lg text-4xl font-bold text-tertiary">98.4%</span>
+<div class="mt-auto pt-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary text-sm">trending_up</span>
+<span class="text-[10px] font-bold text-tertiary uppercase bg-tertiary/10 px-2 py-1 rounded">Optimal</span>
+</div>
+</div>
+<div class="bg-[#0a0a0a] border border-[#1f2937] p-6 flex flex-col rounded-xl">
+<span class="font-label-caps text-xs text-on-surface-variant mb-2 uppercase font-bold tracking-widest">Mean Absolute Error</span>
+<span class="font-display-lg text-4xl font-bold text-primary">$142.08</span>
+<div class="mt-auto pt-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-sm">check_circle</span>
+<span class="text-[10px] font-bold text-primary uppercase bg-primary/10 px-2 py-1 rounded">Target Met</span>
+</div>
+</div>
+<div class="bg-[#0a0a0a] border border-[#1f2937] p-6 flex flex-col rounded-xl">
+<span class="font-label-caps text-xs text-on-surface-variant mb-2 uppercase font-bold tracking-widest">Model Latency (P99)</span>
+<span class="font-display-lg text-4xl font-bold text-on-surface">42ms</span>
+<div class="mt-auto pt-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant text-sm">bolt</span>
+<span class="text-[10px] font-bold text-on-surface-variant uppercase bg-surface-variant/20 px-2 py-1 rounded">Normal</span>
+</div>
+</div>
+<div class="bg-[#0a0a0a] border border-[#1f2937] p-6 flex flex-col rounded-xl">
+<span class="font-label-caps text-xs text-on-surface-variant mb-2 uppercase font-bold tracking-widest">Validation Drift</span>
+<span class="font-display-lg text-4xl font-bold text-secondary">0.04</span>
+<div class="mt-auto pt-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-sm">warning</span>
+<span class="text-[10px] font-bold text-secondary uppercase bg-secondary/10 px-2 py-1 rounded">Watching</span>
+</div>
+</div>
+</section>
+<!-- Bento Diagnostics -->
+<section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Stability Plot -->
+<div class="lg:col-span-2 bg-[#0a0a0a] border border-[#1f2937] p-6 rounded-xl">
+<div class="flex items-center justify-between mb-6">
+<h2 class="font-headline-md text-2xl font-bold">Stability Score Over Time</h2>
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 bg-primary rounded-full"></span>
+<span class="font-label-caps text-[10px] text-on-surface-variant tracking-widest">LGBM_V1</span>
+<span class="w-3 h-3 bg-secondary rounded-full ml-4"></span>
+<span class="font-label-caps text-[10px] text-on-surface-variant tracking-widest">XGB_ENSEMBLE</span>
+</div>
+</div>
+<div class="h-[300px] relative w-full overflow-hidden">
+<!-- SVG Chart Mockup -->
+<svg class="w-full h-full" viewbox="0 0 800 300">
+<path d="M0,150 L50,140 L100,160 L150,145 L200,130 L250,135 L300,120 L350,125 L400,110 L450,115 L500,105 L550,110 L600,100 L650,95 L700,98 L750,92 L800,90" fill="none" stroke="rgba(173, 198, 255, 1)" stroke-width="2"></path>
+<path d="M0,200 L50,190 L100,210 L150,195 L200,180 L250,185 L300,170 L350,175 L400,160 L450,165 L500,155 L550,160 L600,150 L650,145 L700,148 L750,142 L800,140" fill="none" stroke="rgba(255, 176, 205, 0.5)" stroke-dasharray="4" stroke-width="2"></path>
+<!-- Horizontal Grid -->
+<line stroke="rgba(255,255,255,0.05)" x1="0" x2="800" y1="50" y2="50"></line>
+<line stroke="rgba(255,255,255,0.05)" x1="0" x2="800" y1="100" y2="100"></line>
+<line stroke="rgba(255,255,255,0.05)" x1="0" x2="800" y1="150" y2="150"></line>
+<line stroke="rgba(255,255,255,0.05)" x1="0" x2="800" y1="200" y2="200"></line>
+<line stroke="rgba(255,255,255,0.05)" x1="0" x2="800" y1="250" y2="250"></line>
+</svg>
+<div class="absolute inset-0 flex flex-col justify-between pointer-events-none pb-2">
+<span class="text-[10px] font-label-caps text-on-surface-variant opacity-40">1.0</span>
+<span class="text-[10px] font-label-caps text-on-surface-variant opacity-40">0.8</span>
+<span class="text-[10px] font-label-caps text-on-surface-variant opacity-40">0.6</span>
+<span class="text-[10px] font-label-caps text-on-surface-variant opacity-40">0.4</span>
+<span class="text-[10px] font-label-caps text-on-surface-variant opacity-40">0.2</span>
+</div>
+</div>
+</div>
+<!-- Distribution Matrix -->
+<div class="bg-[#0a0a0a] border border-[#1f2937] p-6 rounded-xl">
+<h2 class="font-headline-md text-2xl font-bold mb-6">Error Distribution</h2>
+<div class="space-y-4">
+<div class="flex items-center gap-4">
+<span class="w-20 font-label-caps text-[10px] text-on-surface-variant">Low Error</span>
+<div class="flex-1 h-8 bg-surface-container-high rounded-sm overflow-hidden flex">
+<div class="h-full bg-tertiary/60" style="width: 85%;"></div>
+</div>
+<span class="w-10 font-label-caps text-[10px] text-right font-bold">85%</span>
+</div>
+<div class="flex items-center gap-4">
+<span class="w-20 font-label-caps text-[10px] text-on-surface-variant">Nominal</span>
+<div class="flex-1 h-8 bg-surface-container-high rounded-sm overflow-hidden flex">
+<div class="h-full bg-primary/60" style="width: 12%;"></div>
+</div>
+<span class="w-10 font-label-caps text-[10px] text-right font-bold">12%</span>
+</div>
+<div class="flex items-center gap-4">
+<span class="w-20 font-label-caps text-[10px] text-on-surface-variant">High Deviation</span>
+<div class="flex-1 h-8 bg-surface-container-high rounded-sm overflow-hidden flex">
+<div class="h-full bg-secondary-container" style="width: 3%;"></div>
+</div>
+<span class="w-10 font-label-caps text-[10px] text-right font-bold">3%</span>
+</div>
+</div>
+<div class="mt-6 p-4 border-t border-outline-variant bg-surface-container-lowest/50 rounded-b">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-caps text-[10px] opacity-60 tracking-widest font-bold">Kurtosis</span>
+<span class="font-label-caps text-[10px] text-primary font-bold">3.12</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-[10px] opacity-60 tracking-widest font-bold">Skewness</span>
+<span class="font-label-caps text-[10px] text-primary font-bold">-0.05</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Dense Tabular Data: Comparison Run -->
+<section class="bg-[#0a0a0a] border border-[#1f2937] overflow-hidden rounded-xl">
+<div class="px-6 py-4 border-b border-outline-variant flex items-center justify-between bg-surface-container-lowest">
+<h2 class="font-headline-md text-2xl font-bold">Training Run Comparison</h2>
+<div class="flex gap-2">
+<button onclick="openBtcModal('Export Training Runs', '<p>Export your MLflow training run comparison as CSV.</p><p style=\'margin-top:10px;\'>Run this command in your project terminal:</p><pre style=\'background:#1c1b1b;padding:12px;border-radius:6px;font-size:12px;margin-top:8px;overflow:auto;\'>python -c "import mlflow; df=mlflow.search_runs(); df.to_csv(\'reports/mlflow_runs.csv\',index=False); print(\'Saved!\')"</pre><p style=\'margin-top:12px;color:#8c909f;font-size:12px;\'>Or browse all runs on your DagsHub MLflow dashboard.</p>', "<a href='https://dagshub.com' target='_blank' style='background:#adc6ff;color:#002e6a;padding:8px 16px;border-radius:6px;font-size:12px;font-weight:700;text-decoration:none;'>Open DagsHub MLflow</a>")" class="px-4 py-1 bg-surface-variant text-on-surface font-label-caps text-[10px] rounded hover:bg-outline-variant transition-colors font-bold tracking-widest cursor-pointer">Export CSV</button>
+<button onclick="openBtcModal('Compare Runs', '<p>The top production run is currently <strong style=\'color:#4ae176;\'>#R-9921</strong>.</p><p style=\'margin-top:10px;\'>To compare runs programmatically:</p><pre style=\'background:#1c1b1b;padding:12px;border-radius:6px;font-size:12px;margin-top:8px;overflow:auto;\'>python -c "import mlflow; runs=mlflow.search_runs(); print(runs[[\'run_id\',\'metrics.test_mae\',\'metrics.test_rmse\']].head(3))"</pre>', "<a href='https://dagshub.com' target='_blank' style='background:#adc6ff;color:#002e6a;padding:8px 16px;border-radius:6px;font-size:12px;font-weight:700;text-decoration:none;'>Browse Runs on DagsHub</a>")" class="px-4 py-1 bg-primary text-on-primary font-label-caps text-[10px] rounded hover:opacity-90 transition-opacity font-bold tracking-widest cursor-pointer">Compare 3 Selected</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low border-b border-outline-variant">
+<th class="px-6 py-4 font-label-caps text-[10px] text-on-surface-variant uppercase tracking-widest">Run ID</th>
+<th class="px-6 py-4 font-label-caps text-[10px] text-on-surface-variant uppercase tracking-widest">Hyperparameters</th>
+<th class="px-6 py-4 font-label-caps text-[10px] text-on-surface-variant uppercase tracking-widest">RMSE</th>
+<th class="px-6 py-4 font-label-caps text-[10px] text-on-surface-variant uppercase tracking-widest">R² Score</th>
+<th class="px-6 py-4 font-label-caps text-[10px] text-on-surface-variant uppercase tracking-widest">Status</th>
+<th class="px-6 py-4 font-label-caps text-[10px] text-on-surface-variant uppercase tracking-widest">Timestamp</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/30">
+<tr class="hover:bg-surface-variant/30 transition-colors cursor-pointer group">
+<td class="px-6 py-4 font-label-caps text-primary font-bold">#R-9921</td>
+<td class="px-6 py-4 font-label-caps text-[10px] text-on-surface-variant">lr: 0.001, depth: 12, est: 1000</td>
+<td class="px-6 py-4 font-body-sm font-bold text-lg">0.0241</td>
+<td class="px-6 py-4 font-body-sm font-bold text-lg text-tertiary">0.982</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1 px-2 py-1 bg-tertiary/10 text-tertiary rounded-full text-[10px] font-bold border border-tertiary/20 tracking-widest">PRODUCTION</span>
+</td>
+<td class="px-6 py-4 font-label-caps text-[10px] text-on-surface-variant font-bold">10m ago</td>
+</tr>
+<tr class="hover:bg-surface-variant/30 transition-colors cursor-pointer">
+<td class="px-6 py-4 font-label-caps text-on-surface font-bold">#R-9918</td>
+<td class="px-6 py-4 font-label-caps text-[10px] text-on-surface-variant">lr: 0.005, depth: 8, est: 500</td>
+<td class="px-6 py-4 font-body-sm font-bold text-lg">0.0289</td>
+<td class="px-6 py-4 font-body-sm font-bold text-lg">0.965</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1 px-2 py-1 bg-surface-variant/40 text-on-surface-variant rounded-full text-[10px] font-bold tracking-widest">ARCHIVED</span>
+</td>
+<td class="px-6 py-4 font-label-caps text-[10px] text-on-surface-variant font-bold">2h ago</td>
+</tr>
+<tr class="hover:bg-surface-variant/30 transition-colors cursor-pointer">
+<td class="px-6 py-4 font-label-caps text-on-surface font-bold">#R-9915</td>
+<td class="px-6 py-4 font-label-caps text-[10px] text-on-surface-variant">lr: 0.001, depth: 15, est: 2000</td>
+<td class="px-6 py-4 font-body-sm font-bold text-lg text-secondary">0.0451</td>
+<td class="px-6 py-4 font-body-sm font-bold text-lg text-secondary">0.891</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1 px-2 py-1 bg-error-container/20 text-error rounded-full text-[10px] font-bold border border-error/20 tracking-widest">CRITICAL FAILURE</span>
+</td>
+<td class="px-6 py-4 font-label-caps text-[10px] text-on-surface-variant font-bold">5h ago</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- Validation Matrix Section -->
+<section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="bg-[#0a0a0a] border border-[#1f2937] p-6 rounded-xl">
+<h2 class="font-headline-md text-2xl font-bold mb-6">Feature Importance heatmap</h2>
+<div class="grid grid-cols-5 gap-1">
+{heatmap_html}
+</div>
+<div class="mt-4 flex justify-between font-label-caps text-[10px] text-on-surface-variant uppercase tracking-widest font-bold">
+<span>Low Signal</span>
+<span>High Signal</span>
+</div>
+</div>
+<div class="bg-[#0a0a0a] border border-[#1f2937] p-6 flex flex-col rounded-xl">
+<h2 class="font-headline-md text-2xl font-bold mb-6">Data Integrity Alerts</h2>
+<div class="flex-1 space-y-4">
+<div class="flex items-start gap-4 p-4 bg-secondary-container/10 border-l-4 border-secondary rounded">
+<span class="material-symbols-outlined text-secondary">warning</span>
+<div>
+<p class="font-body-sm font-bold text-secondary">Missing RSI Data Source</p>
+<p class="text-[12px] text-on-surface-variant mt-1">Validation found 2.4% null values in the 'RSI_14' feature set during the last window.</p>
+</div>
+</div>
+<div class="flex items-start gap-4 p-4 bg-tertiary-container/10 border-l-4 border-tertiary rounded">
+<span class="material-symbols-outlined text-tertiary">verified</span>
+<div>
+<p class="font-body-sm font-bold text-tertiary">Drift Repaired</p>
+<p class="text-[12px] text-on-surface-variant mt-1">Automated retraining run R-9921 resolved feature drift in MACD inputs.</p>
+</div>
+</div>
+<div class="flex items-start gap-4 p-4 bg-primary-container/10 border-l-4 border-primary rounded">
+<span class="material-symbols-outlined text-primary">info</span>
+<div>
+<p class="font-body-sm font-bold text-primary">Latency Alert</p>
+<p class="text-[12px] text-on-surface-variant mt-1">API Endpoint 'Node-Alpha' reporting 15ms overhead increase.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+{modal_utility}
+</body></html>

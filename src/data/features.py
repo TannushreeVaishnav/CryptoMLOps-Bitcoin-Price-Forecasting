@@ -40,6 +40,10 @@ def engineer_features(df: pd.DataFrame) -> pd.DataFrame:
     df['BBU_20_2.0'] = bb.bollinger_hband()
     df['BBB_20_2.0'] = bb.bollinger_wband()
     df['BBP_20_2.0'] = bb.bollinger_pband()
+
+    # 5-day BB for short-term volatility (as requested)
+    bb5 = BollingerBands(close=df['Close'], window=5, window_dev=2)
+    df['BBB_5_2.0'] = bb5.bollinger_wband()
     
     df['ATRr_14'] = AverageTrueRange(high=df['High'], low=df['Low'], close=df['Close'], window=14).average_true_range()
 
@@ -56,6 +60,7 @@ def engineer_features(df: pd.DataFrame) -> pd.DataFrame:
     for lag in [1, 2, 3, 5, 7, 14]:
         df[f'close_lag_{lag}']  = df['Close'].shift(lag)
         df[f'return_lag_{lag}'] = df['daily_return'].shift(lag)
+        df[f'log_return_lag_{lag}'] = df['log_return'].shift(lag)
 
     # ── Calendar
     df['day_of_week'] = df.index.dayofweek

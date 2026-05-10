@@ -12,9 +12,14 @@ class FeaturesInput(BaseModel):
     # Using a generic list for the 30-day sequence features for now
     data: list
 
+from fastapi.staticfiles import StaticFiles
+
+# Serve the dashboard folder statically
+app.mount("/dashboard", StaticFiles(directory="dashboard"), name="dashboard")
+
 @app.get("/")
 def read_root():
-    return {"status": "ok", "message": "Bitcoin Price Forecasting API is running!"}
+    return FileResponse("dashboard/index.html")
 
 @app.get("/health")
 def health_check():

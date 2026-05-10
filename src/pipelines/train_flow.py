@@ -1,4 +1,10 @@
 import os
+import sys
+import io
+
+# Force UTF-8 encoding for stdout to handle MLflow emojis on Windows
+if sys.platform == "win32":
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 import json
 import yaml
 import mlflow
@@ -15,6 +21,9 @@ from src.models.lstm_model import BTCLSTMModel
 from src.models.lstm_dataset import BTCDataset
 from src.models.ensemble import ensemble_predict
 from prefect import flow, task
+from dotenv import load_dotenv
+
+load_dotenv()
 
 def compute_metrics(y_true, y_pred, y_prev):
     mae = np.mean(np.abs(y_true - y_pred))
@@ -208,7 +217,7 @@ def train():
     # Save the models to artifacts/ for live inference API
     joblib.dump(xgb_model, "artifacts/xgb_model.pkl")
     torch.save(lstm_model.state_dict(), "artifacts/lstm_model.pth")
-    print("[SUCCESS] Models saved to artifacts/")
+    print("SUCCESS: Models saved to artifacts/")
     
     metrics = evaluate_ensemble(train_df, val_df, test_df, target, p_lstm, p_ens, lstm_val_preds, lstm_test_preds, xgb_val_preds, xgb_test_preds)
     
@@ -230,7 +239,7 @@ def train():
             ["Ensemble (yours)", f"${metrics['test_mae']:,.2f}", f"{metrics['test_mape']:.2f}%", f"{metrics['test_directional_accuracy']:.1f}%"]
         ]
         print("\n" + "="*60)
-        print("📊 BASELINE COMPARISON TABLE")
+        print("BASELINE COMPARISON TABLE")
         print("="*60)
         print(tabulate(table, headers=["Model", "Test MAE", "Test MAPE", "Directional Accuracy"], tablefmt="github"))
         print("="*60 + "\n")

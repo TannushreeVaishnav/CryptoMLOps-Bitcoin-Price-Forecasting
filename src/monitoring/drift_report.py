@@ -7,9 +7,8 @@ os.environ["MKL_NUM_THREADS"] = "1"
 import pandas as pd
 import json
 import os
-from evidently.report import Report
-from evidently.metric_preset import DataDriftPreset, RegressionPreset
-from evidently.metrics import ColumnDriftMetric
+from evidently import Report
+from evidently.presets import DataDriftPreset, RegressionPreset
 
 def run_drift_report():
     print("Generating Evidently Drift Report...")
@@ -30,15 +29,15 @@ def run_drift_report():
         # RegressionPreset() can be added if we include predictions
     ])
     
-    report.run(reference_data=reference_df, current_data=current_df)
+    snapshot = report.run(reference_data=reference_df, current_data=current_df)
     
     os.makedirs("reports", exist_ok=True)
     
     # Save HTML format for human viewing
-    report.save_html("reports/drift.html")
+    snapshot.save_html("reports/drift.html")
     
     # Save JSON format for dashboard parsing
-    report.save_json("reports/drift.json")
+    snapshot.save_json("reports/drift.json")
     
     print("[SUCCESS] Drift report saved to reports/drift.json and reports/drift.html")
     
@@ -49,13 +48,13 @@ def run_drift_report():
             
         metrics = drift_data.get("metrics", [])
         for m in metrics:
-            if m.get("metric") == "DataDriftTable":
-                drift_by_cols = m.get("result", {}).get("drift_by_columns", {})
-                for col, details in drift_by_cols.items():
-                    psi = details.get("drift_score", 0)
-                    if psi > 0.2:
-                        print(f"🚨 ALERT: Feature drift (PSI > 0.2) detected on {col}: {psi:.4f}")
-                        # In production: Trigger unscheduled retraining via Prefect or Slack alert here!
+            config = m.get("config", {})
+            if config.get("type") == "evidently:metric_v2:ValueDrift":
+                col = config.get("column")
+                psi = m.get("value", 0)
+                if col and psi > 0.2:
+                    print(f"ALERT: Feature drift (PSI > 0.2) detected on {col}: {psi:.4f}")
+                    # In production: Trigger unscheduled retraining via Prefect or Slack alert here!
     except Exception as e:
         print(f"Error parsing drift JSON for alerts: {e}")
 
