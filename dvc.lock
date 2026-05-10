@@ -138,3 +138,29 @@ stages:
       md5: fc05eaec36d4bb59a53978e89af0ff71.dir
       size: 3055540
       nfiles: 3
+  Preprocessing:
+    cmd: python -m src.pipelines.preprocess_flow
+    deps:
+    - path: data/raw/bitcoin_investing.csv
+      hash: md5
+      md5: ffe3788aeb9166776043956e70a2b6bd
+      size: 247987
+    - path: params.yaml
+      hash: md5
+      md5: 06b3925cae00ba8ce0a689c47e4af50f
+      size: 554
+    - path: src/data/
+      hash: md5
+      md5: 73fb6809af14cd5ee435bf3703131122.dir
+      size: 32198
+      nfiles: 8
+    outs:
+    - path: artifacts/scaler.pkl
+      hash: md5
+      md5: 6e63f48f14c0a30b2f384d2fd2086b35
+      size: 2359
+    - path: data/processed/
+      hash: md5
+      md5: 31a0ffdc53d3a86df9870a8dc07aac9d.dir
+      size: 5398504
+      nfiles: 4

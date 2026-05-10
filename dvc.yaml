@@ -1,35 +1,24 @@
 stages:
-  feature_engineering:
+  Preprocessing:
     cmd: python -m src.pipelines.preprocess_flow
-    desc: "Loads raw BTC data, performs feature engineering with 35+ indicators, and splits/scales the data for training."
+    desc: "Architecture Layer: Parses raw BTC data, engineers technical indicators, and performs data splitting/scaling."
     deps:
       - data/raw/bitcoin_investing.csv
-      - src/data/loader.py
-      - src/data/features.py
-      - src/data/splitter.py
-    params:
-      - params.yaml:
-          - preprocessing
+      - src/data/
+      - params.yaml
     outs:
-      - data/processed/features.csv
-      - data/processed/splits/
+      - data/processed/
       - artifacts/scaler.pkl
 
-  model_training:
+  Model_Training_and_Ensemble:
     cmd: python -m src.pipelines.train_flow
-    desc: "Trains the LSTM (PyTorch) and XGBoost models, saves artifacts, and performs baseline evaluation."
+    desc: "Architecture Layer: Trains the LSTM and XGBoost models, calculates the Weighted Ensemble, and evaluates against baselines."
     deps:
-      - data/processed/splits/
+      - data/processed/
       - artifacts/scaler.pkl
-      - src/models/lstm_model.py
-      - src/models/xgb_model.py
-      - src/models/ensemble.py
-      - src/models/baselines.py
-    params:
-      - params.yaml:
-          - lstm
-          - xgboost
-          - ensemble
+      - src/models/
+      - src/pipelines/train_flow.py
+      - params.yaml
     outs:
       - artifacts/xgb_model.pkl
       - artifacts/lstm_model.pth
