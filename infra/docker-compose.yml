@@ -14,8 +14,11 @@ services:
       dockerfile: infra/Dockerfile
     ports: ["8000:8000"]
     depends_on: [mlflow]
+    env_file: ../.env
     environment:
-      MLFLOW_TRACKING_URI: http://mlflow:5000
+      MLFLOW_TRACKING_URI: ${MLFLOW_TRACKING_URI:-http://mlflow:5000}
+      MLFLOW_TRACKING_USERNAME: ${MLFLOW_TRACKING_USERNAME}
+      MLFLOW_TRACKING_PASSWORD: ${MLFLOW_TRACKING_PASSWORD}
     volumes:
       - "../src:/app/src"
       - "../data:/app/data"
@@ -28,8 +31,11 @@ services:
     command: streamlit run dashboard/app.py --server.port=8501
     ports: ["8501:8501"]
     depends_on: [api]
+    env_file: ../.env
     environment:
-      MLFLOW_TRACKING_URI: http://mlflow:5000
+      MLFLOW_TRACKING_URI: ${MLFLOW_TRACKING_URI:-http://mlflow:5000}
+      MLFLOW_TRACKING_USERNAME: ${MLFLOW_TRACKING_USERNAME}
+      MLFLOW_TRACKING_PASSWORD: ${MLFLOW_TRACKING_PASSWORD}
     volumes:
       - "../dashboard:/app/dashboard"
       - "../data:/app/data"

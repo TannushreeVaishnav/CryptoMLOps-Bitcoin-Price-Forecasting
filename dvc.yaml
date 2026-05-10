@@ -1,35 +1,38 @@
 stages:
-  preprocess:
+  feature_engineering:
     cmd: python -m src.pipelines.preprocess_flow
+    desc: "Loads raw BTC data, performs feature engineering with 35+ indicators, and splits/scales the data for training."
     deps:
       - data/raw/bitcoin_investing.csv
       - src/data/loader.py
       - src/data/features.py
       - src/data/splitter.py
-    outs:
-      - data/processed/features.csv
-      - data/processed/splits/train.csv
-      - data/processed/splits/val.csv
-      - data/processed/splits/test.csv
-      - artifacts/scaler.pkl
     params:
       - params.yaml:
           - preprocessing
+    outs:
+      - data/processed/features.csv
+      - data/processed/splits/
+      - artifacts/scaler.pkl
 
-  train:
+  model_training:
     cmd: python -m src.pipelines.train_flow
+    desc: "Trains the LSTM (PyTorch) and XGBoost models, saves artifacts, and performs baseline evaluation."
     deps:
-      - data/processed/splits/train.csv
-      - data/processed/splits/val.csv
-      - data/processed/splits/test.csv
+      - data/processed/splits/
       - artifacts/scaler.pkl
       - src/models/lstm_model.py
       - src/models/xgb_model.py
+      - src/models/ensemble.py
+      - src/models/baselines.py
     params:
       - params.yaml:
           - lstm
           - xgboost
           - ensemble
+    outs:
+      - artifacts/xgb_model.pkl
+      - artifacts/lstm_model.pth
     metrics:
       - metrics/scores.json:
           cache: false
